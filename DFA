@@ -1,0 +1,165 @@
+//Q: set that holds the states
+//Sigma: set that holds the alphabet
+//Delta: Transition Function [Q X Sigma -> Q]
+//q0: start state
+//F: set that holds the accept states (final states)
+
+//Program receives formal description of DFA: M=(Q,Sigma,Delta,q0,F)
+/*Program asks for string w on alphabet Sigma and decides weather w 
+is accepted by M or not.*/
+
+//program should/could generate corresponding state diagram
+
+//example of language M (in page 37 and 38 of book)
+//Q = {q1,q2,q3}
+//Sigma={0,1}
+/*Delta= 
+__| 0  1
+q1|q1 q2
+q2|q3 q2
+q3|q2 q2
+*/
+//q1 is start state
+//F={q2}
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <igraph.h>
+
+int main()
+{
+    ifstream file;
+    string w;
+    string value;
+    set<string> states; //set that holds states
+    set<string> alphabet; //set that holds alphabet
+    set<string> finalstates; //set that holds final states
+    //transition function - map,set,graph
+    string currentstate;
+    string startstate; //start state
+    
+    
+    cout<<"Specify file which carries specification for the language of the DFA: ";
+    cin>>language;
+    
+    file.open("language");
+    
+    while(!file.eof())
+    {
+                      
+       while(getline(file,line))
+       {
+       if(i==1) //set that holds states
+       { 
+          //tokenize string as well as put values into corresponding variable
+          //see if this can be made into a function sense it is used 5 times
+          cout<<"line 1"<<endl;
+          stringstream lineStream(line);
+          string token;
+          while(lineStream >> token)
+          {
+              cout << "Token(" << token << ")\n";
+              //save token in variable
+              states.insert(token);
+          }
+        }
+        
+       if(i==2) //set that holds the alphabet
+       { 
+          //tokenize string as well as put values into corresponding variable
+          cout<<"line 2"<<endl;
+          stringstream lineStream(line);
+          string token;
+          while(lineStream >> token)
+          {
+              cout << "Token(" << token << ")\n";
+              alphabet.insert(token);
+          }
+        }
+        
+        if(i==3) //transition function
+       {  //use CharByChar1.cpp
+          //tokenize string as well as put values into corresponding variable
+          cout<<"line 3"<<endl;
+          stringstream lineStream(line);
+          string token;
+          while(lineStream >> token)
+          {
+              cout << "Token(" << token << ")\n";
+          }
+        }
+        
+       if(i==4) //start state
+       { 
+          //tokenize string as well as put values into corresponding variable
+          cout<<"line 4"<<endl;
+          stringstream lineStream(line);
+          string token;
+          while(lineStream >> token)
+          {
+              cout << "Token(" << token << ")\n";
+              //save token in variable
+              q0 = token;
+          }
+        }
+        
+       if(i==5) //set that holds final states
+       { 
+          //tokenize string as well as put values into corresponding variable
+          cout<<"line 5"<<endl;
+          stringstream lineStream(line);
+          string token;
+          while(lineStream >> token)
+          {
+              cout << "Token(" << token << ")\n";
+              finalstates.insert(token);
+          }
+        }
+        
+        if(i>5)
+        {
+           cout<<"too many fields.";
+           break;
+        }
+        
+        i++;
+        }
+    }
+    
+    //read string
+    
+    cout<<"Indicate string.";
+    cin>>w;
+    k=0;
+    
+    //verify string
+    
+    currentstate = startstate;
+    
+    while(k<=w.size())
+    {  
+       if(alphabet.find(w[k]) != alphabet.end())
+       { 
+          //continue with verification 
+       }
+       else 
+       { 
+          cout<<"The string "<<w<<" is NOT accepted by the specified language. The character "<<w[k]<<" is not part of the alphabet.\n"; 
+          break;
+       }      
+    }
+    
+    if(finalstates.find(currentstate) != finalstates.end())
+    { 
+       cout<<"The string "<<w<<" IS accepted by the specified language.\n"; 
+    }
+    else 
+    { 
+       cout<<"The string "<<w<<" is NOT accepted by the specified language. It did not end in a final state.\n"; 
+    }  
+    
+    file.close();
+
+    return 0;
+}
