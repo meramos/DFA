@@ -1,0 +1,14 @@
+The program reads the specifications for the language from a given text file. In this text file, the first line corresponds to the states of the DFA, the second line corresponds to the alphabet, the third line corresponds to the transition function, the fourth line corresponds to the initial state and the fifth line corresponds to the final states.
+
+The elements for each should be separated by a space. 
+
+For the data in example_input, q1, q2 and q3 are the states of the DFA; 0 and 1 are the elements of the alphabet, the following table represents the stated transition function:
+
+ 
+  |  0  1
+---------
+q1| q1 q2
+q2| q3 q2
+q3| q2 q2
+
+q1 is the initial state and q2 is the final state.
