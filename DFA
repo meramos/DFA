@@ -49,6 +49,8 @@ int main()
     
     file.open("language");
     
+    int i=1;
+    
     while(!file.eof())
     {
                       
@@ -80,34 +82,35 @@ int main()
         
         if(i==3) //transition function
        {  
+          int j=0;
           //tokenize string as well as put values into corresponding variable
-          while(i<line.length())
+          while(j<line.length())
           {
-             node1 = line[i];
+             node1 = line[j];
           
-             while(line[i] != '|') //info before the '|', a state
+             while(line[j] != '|') //info before the '|', a state
              {
-                node1 = node1.line[i];
-                i++;
+                node1 = node1.line[j];
+                j++;
              }
-             condition = line[i];
-             while(line[i] != '=') /*info between the '|' and the '=', the 
+             condition = line[j];
+             while(line[j] != '=') /*info between the '|' and the '=', the 
                                  condition for one state to go to another state*/
              {
-                condition = condition.line[i];
-                i++;
+                condition = condition.line[j];
+                j++;
              }
-             node2 = line[i];
-             while(line[i] != ' ') /*info between the '=' and the empty space,
+             node2 = line[j];
+             while(line[j] != ' ') /*info between the '=' and the empty space,
                                      a state*/
              {
-                node2 = node2.line[i];
-                i++;
+                node2 = node2.line[j];
+                j++;
              }
              
              // (node1) --condition--> (node2) 
              
-             i++; //to skip the empty space
+             j++; //to skip the empty space
           }
         }
         
