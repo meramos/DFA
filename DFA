@@ -28,6 +28,8 @@ q3|q2 q2
 #include<sstream>
 #include<set>
 
+using namespace std;
+
 int main()
 {
     ifstream file;
@@ -50,6 +52,9 @@ int main()
     
     int g = 1; //for transition function array. 
     
+    string language; //file with the specified language
+    string line; //to keep track of what line you're in
+    
     cout<<"Specify file which carries specification for the language of the DFA: ";
     cin>>language;
     
@@ -58,8 +63,7 @@ int main()
     int i=1;
     
     while(!file.eof())
-    {
-                      
+    {             
        while(getline(file,line))
        {
        if(i==1) //set that holds states
@@ -103,28 +107,28 @@ int main()
           
              while(line[j] != '|') //info before the '|', a state
              {
-                node1 = node1.line[j];
+                node1+=line[j]; //operator overloading
                 j++;
              }
              condition = line[j];
              while(line[j] != '=') /*info between the '|' and the '=', the 
                                  condition for one state to go to another state*/
              {
-                condition = condition.line[j];
+                condition+=line[j];
                 j++;
              }
              node2 = line[j];
              while(line[j] != ' ') /*info between the '=' and the empty space,
                                      a state*/
              {
-                node2 = node2.line[j];
+                node2+=line[j];
                 j++;
              }
              
              // (node1) --condition--> (node2)
-             array[0,g] = node1;
-             array[g,0] = condition;
-             array[g,g] = node2;
+             array[0][g] = node1;
+             array[g][0] = condition;
+             array[g][g] = node2;
              
              /*
              Form of transition function
@@ -180,7 +184,7 @@ int main()
     
     cout<<"Indicate string.";
     cin>>w;
-    k=0;
+    int k=0;
     
     //verify string
     
@@ -194,19 +198,21 @@ int main()
           
           for(int h=0; h<=NumOfStates; h++)
           {
-             if(array[h][1] == currentstate;
+             if(array[h][1] == currentstate)
              {
                 break;
              }
           }
           for(int l=0; l<=SizeOfAlphabet; l++)
           {
-             if(array[1][l] == w[k];
+             if(array[1][l] == w[k])
              {
                 break;
              }
           }
           currentstate = array[h][l];
+          
+          k++;
        }
        else 
        { 
