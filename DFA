@@ -25,7 +25,8 @@ q3|q2 q2
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <igraph.h>
+#include<sstream>
+#include<set>
 
 int main()
 {
@@ -39,10 +40,15 @@ int main()
     string currentstate;
     string startstate; //start state
     
+    int NumOfStates;
+    int SizeOfSigma;
+    
     //the following three variables are used for reading the transition function line
     string node1; //node1 goes to node2. 
     string node2; //node1 and node2 hold the name of the particular state.
     string condition; //condition for node1 to go to node2
+    
+    int g = 1; //for transition function array. 
     
     cout<<"Specify file which carries specification for the language of the DFA: ";
     cin>>language;
@@ -67,6 +73,8 @@ int main()
               //save token in variable
               states.insert(token);
           }
+          
+          NumOfStates = states.size();
         }
         
        if(i==2) //set that holds the alphabet
@@ -78,13 +86,18 @@ int main()
           {
               alphabet.insert(token);
           }
+          
+          SizeOfSigma = alphabet.size();
         }
         
         if(i==3) //transition function
        {  
+          //NumOfStates: row; SizeOfSigma: column
+          string array[NumOfStates][SizeOfSigma];
+
           int j=0;
-          //tokenize string as well as put values into corresponding variable
-          while(j<line.length())
+
+          while(j<line.length()) //while still in this line
           {
              node1 = line[j];
           
@@ -108,9 +121,25 @@ int main()
                 j++;
              }
              
-             // (node1) --condition--> (node2) 
+             // (node1) --condition--> (node2)
+             array[0,g] = node1;
+             array[g,0] = condition;
+             array[g,g] = node2;
+             
+             /*
+             Form of transition function
+             __| 0| 1
+             q1|q1 q2
+             q2|q3 q2
+             q3|q2 q2
+             
+             first row is for the alphabet
+             first column is for the states
+             the rest is the results
+             */
              
              j++; //to skip the empty space
+             g++; //for next space in transition function
           }
         }
         
@@ -122,7 +151,7 @@ int main()
           while(lineStream >> token)
           {
               //save token in variable
-              q0 = token;
+              startstate = token;
           }
         }
         
@@ -162,6 +191,22 @@ int main()
        if(alphabet.find(w[k]) != alphabet.end())
        { 
           //continue with verification 
+          
+          for(int h=0; h<=NumOfStates; h++)
+          {
+             if(array[h][1] == currentstate;
+             {
+                break;
+             }
+          }
+          for(int l=0; l<=SizeOfAlphabet; l++)
+          {
+             if(array[1][l] == w[k];
+             {
+                break;
+             }
+          }
+          currentstate = array[h][l];
        }
        else 
        { 
