@@ -43,8 +43,8 @@ int main()
     string currentstate;
     string startstate; //start state
     
-    int NumOfStates;
-    int SizeOfSigma;
+    int NumOfStates=0;
+    int SizeOfSigma=0;
     
     //the following three variables are used for reading the transition function line
     string node1; //node1 goes to node2. 
@@ -53,24 +53,36 @@ int main()
     
     int g = 1; //for transition function array. 
     
-    string language; //file with the specified language
+    char language; //file with the specified language
     string line; //to keep track of what line you're in
     
     string **array;
     
     cout<<"Specify file which carries specification for the language of the DFA: ";
-    cin>>language;
+    //cin>>language;*/
+      
+    file.open("DFA_language1.txt");
     
-    file.open("language");
+    cout<<"\n TROLOLOLOLOOOOOOOOOL";
     
     int i=1;
     
+    /*if (!file.is_open()){
+       cerr<< "The file did not open! :c"<< '\n';
+       exit;
+     }*/
+
+    cout<<"\n what cha doin?";
+
     while(!file.eof())
     {             
        while(getline(file,line))
        {
+          cout<<"\n FUUUUUUU";                         
+       
        if(i==1) //set that holds states
        { 
+          cout<<"\n i = 1";
           //tokenize string as well as put values into corresponding variable
           //see if this can be made into a function sense it is used 5 times
           stringstream lineStream(line);
@@ -86,6 +98,7 @@ int main()
         
        if(i==2) //set that holds the alphabet
        { 
+          cout<<"\n i = 2";
           //tokenize string as well as put values into corresponding variable
           stringstream lineStream(line);
           string token;
@@ -99,13 +112,16 @@ int main()
         
         if(i==3) //transition function
        {  
+          cout<<"\n i = 3";
           //NumOfStates: row; SizeOfSigma: column
           **array=array[NumOfStates][SizeOfSigma]; //http://www.gamedev.net/topic/468626-c-non-ms-compiler-testing-if-a-variable-exists/
+
+          cout<<"\n after the array declaration";
 
           int j=0;
 
           while(j<line.length()) //while still in this line
-          {
+          {  cout<<"\n inside while of i=3";  
              node1 = line[j];
           
              while(line[j] != '|') //info before the '|', a state
@@ -155,6 +171,7 @@ int main()
         
        if(i==4) //start state
        { 
+          cout<<"\n i = 4";
           //tokenize string as well as put values into corresponding variable
           stringstream lineStream(line);
           string token;
@@ -167,6 +184,7 @@ int main()
         
        if(i==5) //set that holds final states
        { 
+          cout<<"\n i = 5";
           //tokenize string as well as put values into corresponding variable
           stringstream lineStream(line);
           string token;
@@ -178,6 +196,8 @@ int main()
         
         if(i>5)
         {
+           cout<<"\n twas greater than 5 lines";       
+        
            cout<<"too many fields.";
            break;
         }
@@ -241,5 +261,7 @@ int main()
     
     file.close();
 
+    system("pause");
+    
     return 0;
 }
