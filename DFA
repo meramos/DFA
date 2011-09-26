@@ -25,6 +25,7 @@ q3|q2 q2
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 #include<sstream>
 #include<set>
 
@@ -54,6 +55,8 @@ int main()
     
     string language; //file with the specified language
     string line; //to keep track of what line you're in
+    
+    string **array;
     
     cout<<"Specify file which carries specification for the language of the DFA: ";
     cin>>language;
@@ -97,7 +100,7 @@ int main()
         if(i==3) //transition function
        {  
           //NumOfStates: row; SizeOfSigma: column
-          string array[NumOfStates][SizeOfSigma];
+          **array=array[NumOfStates][SizeOfSigma]; //http://www.gamedev.net/topic/468626-c-non-ms-compiler-testing-if-a-variable-exists/
 
           int j=0;
 
@@ -107,6 +110,7 @@ int main()
           
              while(line[j] != '|') //info before the '|', a state
              {
+                /* http://www.dslreports.com/forum/r19270433-C-Concatenating-a-char-into-a-string */
                 node1+=line[j]; //operator overloading
                 j++;
              }
@@ -132,10 +136,12 @@ int main()
              
              /*
              Form of transition function
-             __| 0| 1
-             q1|q1 q2
-             q2|q3 q2
-             q3|q2 q2
+                0  1  2
+              ---------
+            0 |__| 0| 1
+            1 |q1|q1 q2
+            2 |q2|q3 q2
+            3 |q3|q2 q2
              
              first row is for the alphabet
              first column is for the states
@@ -191,24 +197,27 @@ int main()
     currentstate = startstate;
     
     while(k<=w.size())
-    {  
-       if(alphabet.find(w[k]) != alphabet.end())
+    {  //char character = w[k].c_str();
+       if(alphabet.find(w.c_str()) != alphabet.end()) //w[k].c_str()
        { 
           //continue with verification 
-          
-          for(int h=0; h<=NumOfStates; h++)
+          int h=0;
+          while(h<=NumOfStates)
           {
              if(array[h][1] == currentstate)
              {
                 break;
              }
+             h++;
           }
-          for(int l=0; l<=SizeOfAlphabet; l++)
+          int l=0;
+          while(l<=SizeOfSigma)
           {
-             if(array[1][l] == w[k])
+             if(array[1][l] == w.c_str())
              {
                 break;
              }
+             l++;
           }
           currentstate = array[h][l];
           
