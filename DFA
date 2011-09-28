@@ -271,39 +271,47 @@ int main()
     
     currentstate = startstate;
     
-    while(k<=w.size())
-    {  //char character = w[k].c_str();
-       cout<<"\n w.c_str()=:"<<w.c_str()<<endl;
-       if(alphabet.find(w.c_str()) != alphabet.end()) //w[k].c_str() does not enter this while
+    string a;
+
+    while(k<w.size())
+    {  
+       a = w[k];
+       
+       if(alphabet.find(a) != alphabet.end()) //w[k].c_str() does not enter this while alphabet.find(w.c_str()) != alphabet.end()
        {  
           //continue with verification 
-          h=1;
-          while(h<rows)
+
+          h=1; 
+          rows = states.size() + 1;
+          while(h<rows) //check for state in first column of 'array'
           {
-             if(array[h][0] == currentstate)
+             if(array[h][0] == currentstate) //in second iteration of the while in i=3, this part is not done right
              {
-                break;
+               break;
              }
              h++;
           }
+
           l=1;
-          while(l<columns)
-          {
-             if(array[0][l] == w.c_str())
+          columns = alphabet.size() + 1;
+          while(l<columns) //check for condition in first row of 'array'
+          {  
+             if(array[0][l] == a) //in second iteration of the while in i=3, this part is not done right
              {
                 break;
              }
              l++;
           }
-          currentstate = array[h][l];
-          
+             
+          currentstate = array[h][l];          
+
           k++;
        }
        else 
        { 
           cout<<"The string "<<w<<" is NOT accepted by the specified language. The character "<<w[k]<<" is not part of the alphabet.\n"; 
           break;
-       }      
+       }    
     }
     
     if(finalstates.find(currentstate) != finalstates.end())
