@@ -43,32 +43,24 @@ int main()
     string currentstate;
     string startstate; //start state
     
-    int rows=0;
-    int columns=0;
+    string **array; //transition function
+    int rows=0; //future rows of 'array'
+    int columns=0; //future columns of 'array'
+    int h;
+    int l;
     
     //the following three variables are used for reading the transition function line
     string node1; //node1 goes to node2. 
     string node2; //node1 and node2 hold the name of the particular state.
     string condition; //condition for node1 to go to node2
     
-    int g = 1; //for transition function array. 
-    
     char language; //file with the specified language
     string line; //to keep track of what line you're in
-    
-    string **array;
-    
-    int t=1;
-    
-    set<string>::iterator d = states.begin();
-    set<string>::iterator e = alphabet.begin();
     
     cout<<"Specify file which carries specification for the language of the DFA: ";
     //cin>>language;*/
       
     file.open("DFA_language1.txt");
-    
-    cout<<"\n TROLOLOLOLOOOOOOOOOL";
     
     int i=1;
     
@@ -77,17 +69,13 @@ int main()
        exit;
      }*/
 
-    cout<<"\n what cha doin?";
-
     while(!file.eof())
     {             
        while(getline(file,line))
-       {
-          cout<<"\n FUUUUUUU";                         
+       {                   
        
        if(i==1) //set that holds states
        { 
-          cout<<"\n i = 1";
           //tokenize string as well as put values into corresponding variable
           //see if this can be made into a function sense it is used 5 times
           stringstream lineStream(line);
@@ -103,7 +91,6 @@ int main()
         
        if(i==2) //set that holds the alphabet
        { 
-          cout<<"\n i = 2";
           //tokenize string as well as put values into corresponding variable
           stringstream lineStream(line);
           string token;
@@ -122,36 +109,47 @@ int main()
           //SizeOfSigma: column
           
           //this array declaration is only done once
-          array = new string*[rows]; //http://www.gamedev.net/topic/468626-c-non-ms-compiler-testing-if-a-variable-exists/
+          array = new string*[rows];
           //[SizeOfSigma]
          
+          //getting the spaces in memory
              for (int row=0; row<rows; row++)
              {
                 array[row] = new string[columns];
              }
-             t=2;
-             
-          int b = 1;
+             //t=2;
 
-          while(d != states.end() ) //assign states to first column of array
-          {
-              array[b][0] = *d++;
+          cout<<"\n before storing states";
+          
+          int b = 1; /*counter used in the following while to store values from the
+                      set 'states' into the array 'array'*/
+          set<string>::iterator stateIterator; //iterator to go through values in the set 'states'
+          for(stateIterator = states.begin(); stateIterator != states.end(); stateIterator++) //assign states to first column of array
+          {   //doesn't get to here
+              cout<<"\n inside state for";
+              array[b][0] = *stateIterator;
+              cout<<"\n states array("<<b<<",0): "<<array[b][0];
               b++; 
-          }
+          } //working
+          
+          cout<<"\n after storing states";
 
           int c = 1;
-          while(e != alphabet.end() ) //assign alphabet to first row of array
+          set<string>::iterator alphabetIterator; //iterator to go through values in the set 'alphabet'
+          for(alphabetIterator = alphabet.begin(); alphabetIterator != alphabet.end(); alphabetIterator++) //assign alphabet to first row of array
           {
-             array[0][c] = *e++;
+             cout<<"\n inside alphabet for";
+             array[0][c] = *alphabetIterator;
+             cout<<"\n alphabet array(0,"<<c<<"): "<<array[0][c];
              c++; 
-          }
+          } //working
              
           cout<<"\n after the array declaration";
 
           int j=0;
 
-           while(j<line.length()) //reading the line
-          {  cout<<"\n inside while of i=3";  //after twi if these, program stops working
+           while(j<line.length()) //reading the line ----- error is in here
+          {  cout<<"\n inside while of i=3";  //after 1 of this, program stops working
              node1 = line[j];
              j++;
              while(line[j] != '|') //info before the '|', a state
@@ -178,31 +176,39 @@ int main()
                 j++;
              }
              
-             // (node1) --condition--> (node2)
-             //problem: g sigue incrementando, se pone mayor que el numero 
+             cout<<"\n node1="<<node1;
+             cout<<"\n condition="<<condition;
+             cout<<"\n node2="<<node2;
              
-             int h=0;
-             while(h<rows)
+             cout<<"\n after reading";
+             
+             // (node1) --condition--> (node2)
+             h=1; 
+             while(h<rows) //check for state in first column of 'array'
              {
-               if(array[h][0] == node1)
+               cout<<"\n inside row while";
+               cout<<"\n array("<<h<<",0)="<<array[h][0];
+               if(array[h][0] == node1) //in second iteration of the while in i=3, this part is not done right
                {
                   break;
                }
                h++;
-             }
-             int l=0;
-             while(l<columns)
-             {
-                if(array[0][l] == condition)
+             }//ends
+             l=1;
+             while(l<columns) //check for condition in first row of 'array'
+             {  
+                cout<<"\n inside column while";
+                cout<<"\n array(0,"<<l<<")="<<array[0][l];
+                if(array[0][l] == condition) //in second iteration of the while in i=3, this part is not done right
                 {
                    break;
                 }
                 l++;
-             }
+             } //doesn't end?
              
              array[h][l] = node2;
 
-             cout<<"("<<h<<","<<l<<"): "<<array[h][l]<<endl;  
+             cout<<"\n ("<<h<<","<<l<<"): "<<array[h][l]<<endl; //works for first cycle, stops working for second one
              
              /*
              Form of transition function
@@ -217,9 +223,6 @@ int main()
              first column is for the states
              the rest is the results
              */
-             
-             //j++; to skip the empty space
-             g++; //for next space in transition function
           }
         }
         
@@ -275,7 +278,7 @@ int main()
        if(alphabet.find(w.c_str()) != alphabet.end()) //w[k].c_str()
        { 
           //continue with verification 
-          int h=0;
+          h=1;
           while(h<rows)
           {
              if(array[h][0] == currentstate)
@@ -284,7 +287,7 @@ int main()
              }
              h++;
           }
-          int l=0;
+          l=1;
           while(l<columns)
           {
              if(array[0][l] == w.c_str())
