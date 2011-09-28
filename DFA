@@ -54,11 +54,11 @@ int main()
     string node2; //node1 and node2 hold the name of the particular state.
     string condition; //condition for node1 to go to node2
     
-    char language; //file with the specified language
+    //char language; //file with the specified language
     string line; //to keep track of what line you're in
     
-    cout<<"Specify file which carries specification for the language of the DFA: ";
-    //cin>>language;*/
+    cout<<"\nSpecify file which carries specification for the language of the DFA: ";
+    //cin>>language;
       
     file.open("DFA_language1.txt");
     
@@ -104,7 +104,7 @@ int main()
         
         if(i==3) //transition function
        {  
-          cout<<"\n i = 3";
+          //cout<<"\n i = 3";
           //NumOfStates: row
           //SizeOfSigma: column
           
@@ -119,37 +119,37 @@ int main()
              }
              //t=2;
 
-          cout<<"\n before storing states";
+          //cout<<"\n before storing states";
           
           int b = 1; /*counter used in the following while to store values from the
                       set 'states' into the array 'array'*/
           set<string>::iterator stateIterator; //iterator to go through values in the set 'states'
           for(stateIterator = states.begin(); stateIterator != states.end(); stateIterator++) //assign states to first column of array
           {   //doesn't get to here
-              cout<<"\n inside state for";
+              //cout<<"\n inside state for";
               array[b][0] = *stateIterator;
-              cout<<"\n states array("<<b<<",0): "<<array[b][0];
+              //cout<<"\n states array("<<b<<",0): "<<array[b][0];
               b++; 
           } //working
           
-          cout<<"\n after storing states";
+          //cout<<"\n after storing states";
 
           int c = 1;
           set<string>::iterator alphabetIterator; //iterator to go through values in the set 'alphabet'
           for(alphabetIterator = alphabet.begin(); alphabetIterator != alphabet.end(); alphabetIterator++) //assign alphabet to first row of array
           {
-             cout<<"\n inside alphabet for";
+             //cout<<"\n inside alphabet for";
              array[0][c] = *alphabetIterator;
-             cout<<"\n alphabet array(0,"<<c<<"): "<<array[0][c];
+             //cout<<"\n alphabet array(0,"<<c<<"): "<<array[0][c];
              c++; 
           } //working
              
-          cout<<"\n after the array declaration";
+          //cout<<"\n after the array declaration";
 
           int j=0;
 
            while(j<line.length()) //reading the line ----- error is in here
-          {  cout<<"\n inside while of i=3";  //after 1 of this, program stops working
+          {  //cout<<"\n inside while of i=3";  //after 1 of this, program stops working
              node1 = line[j];
              j++;
              while(line[j] != '|') //info before the '|', a state
@@ -176,18 +176,18 @@ int main()
                 j++;
              }
              
-             cout<<"\n node1="<<node1;
+             /*cout<<"\n node1="<<node1;
              cout<<"\n condition="<<condition;
              cout<<"\n node2="<<node2;
              
-             cout<<"\n after reading";
+             cout<<"\n after reading";*/
              
              // (node1) --condition--> (node2)
              h=1; 
              while(h<rows) //check for state in first column of 'array'
              {
-               cout<<"\n inside row while";
-               cout<<"\n array("<<h<<",0)="<<array[h][0];
+               /*cout<<"\n inside row while";
+               cout<<"\n array("<<h<<",0)="<<array[h][0];*/
                if(array[h][0] == node1) //in second iteration of the while in i=3, this part is not done right
                {
                   break;
@@ -197,8 +197,8 @@ int main()
              l=1;
              while(l<columns) //check for condition in first row of 'array'
              {  
-                cout<<"\n inside column while";
-                cout<<"\n array(0,"<<l<<")="<<array[0][l];
+                /*cout<<"\n inside column while";
+                cout<<"\n array(0,"<<l<<")="<<array[0][l];*/
                 if(array[0][l] == condition) //in second iteration of the while in i=3, this part is not done right
                 {
                    break;
@@ -208,7 +208,7 @@ int main()
              
              array[h][l] = node2;
 
-             cout<<"\n ("<<h<<","<<l<<"): "<<array[h][l]<<endl; //works for first cycle, stops working for second one
+             //cout<<"\n ("<<h<<","<<l<<"): "<<array[h][l]<<endl;
              
              /*
              Form of transition function
@@ -223,12 +223,13 @@ int main()
              first column is for the states
              the rest is the results
              */
+             
+             j++; //skip space
           }
         }
         
        if(i==4) //start state
        { 
-          cout<<"\n i = 4";
           //tokenize string as well as put values into corresponding variable
           stringstream lineStream(line);
           string token;
@@ -241,7 +242,6 @@ int main()
         
        if(i==5) //set that holds final states
        { 
-          cout<<"\n i = 5";
           //tokenize string as well as put values into corresponding variable
           stringstream lineStream(line);
           string token;
@@ -253,8 +253,6 @@ int main()
         
         if(i>5)
         {
-           cout<<"\n twas greater than 5 lines";       
-        
            cout<<"too many fields.";
            break;
         }
@@ -265,7 +263,7 @@ int main()
     
     //read string
     
-    cout<<"Indicate string.";
+    cout<<"\n\nIndicate string.";
     cin>>w;
     int k=0;
     
@@ -275,8 +273,9 @@ int main()
     
     while(k<=w.size())
     {  //char character = w[k].c_str();
-       if(alphabet.find(w.c_str()) != alphabet.end()) //w[k].c_str()
-       { 
+       cout<<"\n w.c_str()=:"<<w.c_str()<<endl;
+       if(alphabet.find(w.c_str()) != alphabet.end()) //w[k].c_str() does not enter this while
+       {  
           //continue with verification 
           h=1;
           while(h<rows)
